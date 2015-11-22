@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="apRoot" maxHeight="Infinity" maxWidth="Infinity" prefHeight="400" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="info.persistent.dex.controllers.MainController">
+   <children>
+      <VBox fx:id="vbMenuContent" maxHeight="Infinity" maxWidth="Infinity" prefHeight="466.0" prefWidth="659.0">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                        <MenuItem fx:id="miOpen" mnemonicParsing="false" text="Open Files..." />
+                        <MenuItem fx:id="miSaveAs" mnemonicParsing="false" text="Save as..." />
+                        <Menu fx:id="menuRecent" mnemonicParsing="false" text="Recent files" />
+                        <MenuItem fx:id="miExit" mnemonicParsing="false" text="Exit" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <Pane fx:id="pnTabsDrop" prefHeight="442.0" prefWidth="659.0">
+               <children>
+                  <TabPane fx:id="tpTabs" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS" />
+                  <Label fx:id="lblDnD" alignment="CENTER" prefHeight="434.0" prefWidth="651.0" text="Drop APK files here" />
+                   <VBox fx:id="vbLoading" alignment="CENTER" prefHeight="434.0" prefWidth="651.0">
+                       <children>
+                            <ProgressIndicator fx:id="piLoading" />
+                       </children>
+                   </VBox>
+                   
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

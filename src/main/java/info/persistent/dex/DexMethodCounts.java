@@ -18,48 +18,27 @@ import com.android.dexdeps.ClassRef;
 import com.android.dexdeps.DexData;
 import com.android.dexdeps.MethodRef;
 import com.android.dexdeps.Output;
+import info.persistent.dex.models.DexNode;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.NavigableMap;
 import java.util.Set;
-import java.util.TreeMap;
 
 public class DexMethodCounts {
     private static final PrintStream out = System.out;
-    public static int overallCount = 0;
-
     enum Filter {
         ALL,
         DEFINED_ONLY,
         REFERENCED_ONLY
     }
 
-    private static class Node {
-        int count = 0;
-        NavigableMap<String, Node> children = new TreeMap<String, Node>();
-
-        void output(String indent) {
-            if (indent.length() == 0) {
-                out.println("<root>: " + count);
-                overallCount += count;
-            }
-            indent += "    ";
-            for (String name : children.navigableKeySet()) {
-                Node child = children.get(name);
-                out.println(indent + name + ": " + child.count);
-                child.output(indent);
-            }
-        }
-    }
-
-    public static void generate(
+    public static DexNode generate(
             DexData dexData, boolean includeClasses, String packageFilter,
             int maxDepth, Filter filter) {
         MethodRef[] methodRefs = getMethodRefs(dexData, filter);
-        Node packageTree = new Node();
+        DexNode packageTree = new DexNode();
 
         for (MethodRef methodRef : methodRefs) {
             String classDescriptor = methodRef.getDeclClassName();
@@ -71,22 +50,22 @@ public class DexMethodCounts {
                 continue;
             }
             String packageNamePieces[] = packageName.split("\\.");
-            Node packageNode = packageTree;
+            DexNode packageDexNode = packageTree;
             for (int i = 0; i < packageNamePieces.length && i < maxDepth; i++) {
-                packageNode.count++;
+                packageDexNode.count_increment();
                 String name = packageNamePieces[i];
-                if (packageNode.children.containsKey(name)) {
-                    packageNode = packageNode.children.get(name);
+                if (packageDexNode.childs().containsKey(name)) {
+                    packageDexNode = packageDexNode.childs().get(name);
                 } else {
-                    Node childPackageNode = new Node();
-                    packageNode.children.put(name, childPackageNode);
-                    packageNode = childPackageNode;
+                    DexNode childPackageDexNode = new DexNode();
+                    packageDexNode.childs().put(name, childPackageDexNode);
+                    packageDexNode = childPackageDexNode;
                 }
             }
-            packageNode.count++;
+            packageDexNode.count_increment();
         }
 
-        packageTree.output("");
+        return  packageTree;
     }
 
     private static MethodRef[] getMethodRefs(DexData dexData, Filter filter) {
