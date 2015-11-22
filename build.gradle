@@ -19,7 +19,7 @@ javafx {
 
     // Application name and ID presented by target OS
     appID 'DexMethodCounts'
-    appName 'Java dex method counts UI'
+    appName 'DexMethodCountsUI'
     // Main class of application
     mainClass 'info.persistent.dex.MainUI'
 
@@ -50,6 +50,6 @@ jar {
     // Redirect output to match launcher script
     destinationDir = file('build/jar')
     manifest {
-        attributes("Main-Class": "info.persistent.dex.Main")
+        attributes("Main-Class": "info.persistent.dex.MainUI")
     }
 }

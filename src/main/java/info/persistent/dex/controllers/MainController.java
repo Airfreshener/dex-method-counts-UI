@@ -2,7 +2,6 @@ package info.persistent.dex.controllers;
 
 import com.android.dexdeps.DexData;
 import com.android.dexdeps.DexDataException;
-import com.sun.deploy.util.StringUtils;
 import info.persistent.dex.Constants;
 import info.persistent.dex.DexMethodCounts;
 import info.persistent.dex.models.DexNode;
@@ -177,12 +176,14 @@ public class MainController implements Initializable {
                         break;
                     }
                 }
+/*
                 if(!isFail){
                     recentFiles.remove(file);
                     recentFiles.add(0, file);
                 }
+*/
             }
-            prefs.setString("recent", StringUtils.join(recentFiles, "\n"));
+            //prefs.setString("recent", StringUtils.join(recentFiles, "\n"));
             updateRecentMenu(recentFiles);
 
         }

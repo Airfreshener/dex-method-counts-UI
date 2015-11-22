@@ -3,7 +3,7 @@
     <property name="build.dir"   value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="jar.dir"     value="${build.dir}/jar"/>
-    <property name="main-class"  value="info.persistent.dex.Main"/>
+    <property name="main-class"  value="info.persistent.dex.MainUI"/>
 
     <target name="clean">
         <delete dir="${build.dir}"/>
@@ -18,7 +18,7 @@
 
     <target name="jar" depends="compile">
         <mkdir dir="${jar.dir}"/>
-        <jar destfile="${jar.dir}/dex-method-counts.jar" basedir="${classes.dir}">
+        <jar destfile="${jar.dir}/DexMethodCountsUI.jar" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main-class}"/>
             </manifest>
